@@ -259,4 +259,3 @@ while True:
         print('Please enter correct value.')
         continue
 
-
