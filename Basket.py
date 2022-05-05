@@ -1,5 +1,4 @@
 import os
-from secrets import choice
 
 cls = lambda: os.system('cls')
 
@@ -32,11 +31,12 @@ class Products:
 
 prod_list = []
 cart = []
+pay_basic = []
 
 #Example products
-prod_list.append(Products(prod_name = 'Banana', prod_stock = 20, prod_cost = 1.00))
-prod_list.append(Products(prod_name = 'Carrot', prod_stock = 30, prod_cost = 2.00))
-prod_list.append(Products(prod_name = 'Watermelon', prod_stock = 15, prod_cost = 3.00))
+prod_list.append(Products(prod_name = 'Banana', prod_stock = 20, prod_cost = 2.01))
+prod_list.append(Products(prod_name = 'Carrot', prod_stock = 30, prod_cost = 3.02))
+prod_list.append(Products(prod_name = 'Watermelon', prod_stock = 15, prod_cost = 4.03))
 
 
 def admin_menu():
@@ -148,9 +148,6 @@ def change_product():
             continue
 
 
-                  
-
-
 
 def shopping_cart():
     """Client navigation menu - class ShoppingProduct """
@@ -199,6 +196,7 @@ def shopping_cart_add():
             print('Please enter correct value.\n')
             continue
 
+
 def shopping_cart_remove():
     """Remove item form shopping cart - class ShoppingProduct """
     cls()
@@ -220,42 +218,46 @@ def shopping_cart_remove():
             continue
 
 def shopping_cart_clear():
+    """Remove all items from shopping cart - class ShoppingProduct"""
+
     cls()
     cart.clear()
     
-def shopping_cart_summary(): 
-    cls()
 
-    pay = 0
+def shopping_cart_summary(): 
+    """Count total cost of all products in cart - class ShoppingProduct + Products"""
+
+    cls()
+    pay_basic =[]
     indx_shop = 0   
     indx_cart = 0
-
-    for i in range(len(cart)):
-        print(f'Items in cart: {cart[indx_cart].shop_prod_name} Qty: {cart[indx_cart].shop_prod_qty}\n')
-
-        for x in range(len(prod_list)):
-            if str(cart[indx_cart].shop_prod_name) == str(prod_list[indx_shop].prod_name):
-                
-                pay_basic = cart[indx_cart].shop_prod_qty * prod_list[indx_shop].prod_cost
-
-            indx_shop =+ 1
-        pay =+ pay_basic
+    
+    for elem in cart:
+     
+        pay_basic.append(cart[indx_cart].shop_prod_qty * prod_list[indx_shop].prod_cost)
+        indx_shop =+ 1
         indx_cart += 1
-        print(pay)
 
-
+    total_net = sum(pay_basic)
+    total_net_formated = "{:.2f}".format(total_net)
+    total_gross = total_net * 1.23
+    total_gross_formated = "{:.2f}".format(total_gross)
+    print(f'Total Net cost: {total_net_formated} | Total Gross cost: {total_gross_formated}')
+    
     if cart ==[]:
         print('Cart is empty.\n')
+    
         
-            
-        
+                
 while True:
-    choice = int(input('1.Admin\n 2.Client'))
+    choice = int(input('1.Admin\n2.Client\n'))
+
     if choice == 1:
         admin_menu()
     elif choice == 2:
         shopping_cart()
     else:
-        print('Please enter correct value.')
+        print('Please enter correct value.\n')
         continue
+
 
